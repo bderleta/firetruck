@@ -289,7 +289,7 @@
       statusEl.textContent = text || '';
     }
 
-    const API_BASE_URL = 'http://192.168.4.1';
+    const API_BASE_URL = '';
 
     function fetchApi(path) {
       const url = /^https?:\/\//i.test(path) ? path : API_BASE_URL + (path.startsWith('/') ? path : '/' + path);

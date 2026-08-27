@@ -292,7 +292,7 @@ const char root_html[] =
     "      statusEl.textContent = text || '';\n"
     "    }\n"
     "\n"
-    "    const API_BASE_URL = 'http://192.168.4.1';\n"
+    "    const API_BASE_URL = '';\n"
     "\n"
     "    function fetchApi(path) {\n"
     "      const url = /^https?:\\/\\//i.test(path) ? path : API_BASE_URL + (path.startsWith('/') ? path : '/' + path);\n"
