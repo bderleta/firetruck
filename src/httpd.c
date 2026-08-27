@@ -1,5 +1,6 @@
 #include "httpd.h"
 #include "ft.h"
+#include "index_html.h"
 
 static const char *TAG = "httpd";
 
@@ -370,6 +371,25 @@ static const httpd_uri_t uri_emergency_lights = {
     .user_ctx  = NULL
 };
 
+static esp_err_t index_http_handler(httpd_req_t *req)
+{
+    httpd_resp_set_type(req, "text/html");
+    return httpd_resp_send(req, root_html, HTTPD_RESP_USE_STRLEN);
+}
+
+static const httpd_uri_t uri_root = {
+    .uri       = "/",
+    .method    = HTTP_GET,
+    .handler   = index_http_handler,
+    .user_ctx  = NULL
+};
+static const httpd_uri_t uri_index = {
+    .uri       = "/index.html",
+    .method    = HTTP_GET,
+    .handler   = index_http_handler,
+    .user_ctx  = NULL
+};
+
 static httpd_handle_t start_webserver(void)
 {
     httpd_handle_t server = NULL;
@@ -382,6 +402,8 @@ static httpd_handle_t start_webserver(void)
     if (httpd_start(&server, &config) == ESP_OK) {
         // Set URI handlers
         ESP_LOGI(TAG, "Registering URI handlers");
+        httpd_register_uri_handler(server, &uri_root);
+        httpd_register_uri_handler(server, &uri_index);
         httpd_register_uri_handler(server, &uri_drive);
         httpd_register_uri_handler(server, &uri_steer);
         httpd_register_uri_handler(server, &uri_ladder);
